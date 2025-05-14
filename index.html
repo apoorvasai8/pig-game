@@ -2,105 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Wikipedia Search App</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 40px;
-        background-color: #f9f9f9;
-        text-align: center;
-      }
-
-      h1 {
-        color: #333;
-      }
-
-      input {
-        width: 60%;
-        padding: 10px;
-        font-size: 16px;
-        margin-top: 10px;
-      }
-
-      button {
-        padding: 10px 20px;
-        font-size: 16px;
-        margin-top: 10px;
-        cursor: pointer;
-      }
-
-      #results {
-        margin-top: 30px;
-        text-align: left;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .result-item {
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-      }
-
-      .result-item a {
-        font-size: 18px;
-        color: #1a0dab;
-        text-decoration: none;
-      }
-
-      .result-item p {
-        color: #555;
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Pig Game</title>
   </head>
   <body>
-    <h1>Wikipedia Search App</h1>
-    <input type="text" id="searchInput" placeholder="Search Wikipedia..." />
-    <button onclick="searchWikipedia()">Search</button>
+    <main>
+      <section class="player player--0 player--active">
+        <h2 class="name" id="name--0">Player 1</h2>
+        <p class="score" id="score--0">43</p>
+        <div class="current">
+          <p class="current-label">Current</p>
+          <p class="current-score" id="current--0">0</p>
+        </div>
+      </section>
+      <section class="player player--1">
+        <h2 class="name" id="name--1">Player 2</h2>
+        <p class="score" id="score--1">24</p>
+        <div class="current">
+          <p class="current-label">Current</p>
+          <p class="current-score" id="current--1">0</p>
+        </div>
+      </section>
 
-    <div id="results"></div>
-
-    <script>
-      async function searchWikipedia() {
-        const query = document.getElementById("searchInput").value;
-        const resultsDiv = document.getElementById("results");
-        resultsDiv.innerHTML = "";
-
-        if (!query.trim()) {
-          resultsDiv.innerHTML = "<p>Please enter a search term.</p>";
-          return;
-        }
-
-        const endpoint = `https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&srsearch=${encodeURIComponent(
-          query
-        )}&format=json`;
-
-        try {
-          const response = await fetch(endpoint);
-          const data = await response.json();
-          const results = data.query.search;
-
-          if (results.length === 0) {
-            resultsDiv.innerHTML = "<p>No results found.</p>";
-            return;
-          }
-
-          results.forEach((item) => {
-            const url = `https://en.wikipedia.org/?curid=${item.pageid}`;
-            resultsDiv.innerHTML += `
-            <div class="result-item">
-              <a href="${url}" target="_blank">${item.title}</a>
-              <p>${item.snippet}...</p>
-            </div>
-          `;
-          });
-        } catch (error) {
-          resultsDiv.innerHTML =
-            "<p>Error fetching results. Please try again.</p>";
-          console.error(error);
-        }
-      }
-    </script>
+      <img src="dice-5.png" alt="Playing dice" class="dice" />
+      <button class="btn btn--new">🔄 New game</button>
+      <button class="btn btn--roll">🎲 Roll dice</button>
+      <button class="btn btn--hold">📥 Hold</button>
+    </main>
+    <script src="script.js"></script>
   </body>
 </html>
